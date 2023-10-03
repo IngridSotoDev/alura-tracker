@@ -1,5 +1,5 @@
 <template>
-  <div class="box">
+  <div class="box formulario">
     <div class="columns">
       <div
         role="form"
@@ -44,3 +44,11 @@ export default defineComponent({
   },
 });
 </script>
+
+
+<style scoped>
+.formulario {
+  color: var(--texto-primario);
+  background-color: var(--bg-primario);
+}
+</style>
