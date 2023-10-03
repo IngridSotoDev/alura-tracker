@@ -28,11 +28,17 @@ import Temporizador from "./Temporizador.vue";
 export default defineComponent({
   name: "Formulario",
   components: { Temporizador },
+  emits: ['onSave'],
   data() {
     return { descricao: "" };
   },
   methods: {
     finalizarTarefa(tempoDecorrido: number): void {
+      this.$emit('onSave', {
+        duracaoEmSegundos: tempoDecorrido,
+        descricao: this.descricao
+      })
+      
       this.descricao = "";
     },
   },
