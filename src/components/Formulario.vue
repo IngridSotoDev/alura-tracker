@@ -3,7 +3,7 @@
     <div class="columns">
       <div
         role="form"
-        class="column is-8"
+        class="column is-5"
         aria-label="Formulário para criação de uma nova tarefa"
       >
         <input
@@ -14,6 +14,21 @@
         />
       </div>
 
+      <div class="column is-3">
+        <div class="select">
+          <select v-model="idProjeto">
+            <option value="">Selecione o projeto</option>
+            <option
+              :value="projeto.id"
+              v-for="projeto in projetos"
+              :key="projeto.id"
+            >
+              {{ projeto.nome }}
+            </option>
+          </select>
+        </div>
+      </div>
+
       <div class="column">
         <Temporizador @aoTemporizadorFinalizado="finalizarTarefa" />
       </div>
@@ -22,7 +37,11 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { computed, defineComponent } from "vue";
+import { useStore } from "vuex";
+
+import { key } from '@/store'
+
 import Temporizador from "./Temporizador.vue";
 
 export default defineComponent({
@@ -30,17 +49,25 @@ export default defineComponent({
   components: { Temporizador },
   emits: ['onSave'],
   data() {
-    return { descricao: "" };
+    return { descricao: "", idProjeto: '' };
   },
   methods: {
     finalizarTarefa(tempoDecorrido: number): void {
       this.$emit('onSave', {
         duracaoEmSegundos: tempoDecorrido,
-        descricao: this.descricao
+        descricao: this.descricao,
+        projeto: this.projetos.find(proj => proj.id === this.idProjeto)
       })
       
       this.descricao = "";
     },
+  },
+  setup() {
+      const store = useStore(key)
+
+      return {
+        projetos: computed(() => store.state.projetos)
+      }
   },
 });
 </script>
