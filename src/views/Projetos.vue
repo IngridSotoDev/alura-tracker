@@ -46,21 +46,19 @@ export default defineComponent({
       nomeDoProjeto: "",
     };
   },
-  computed: {},
   methods: {
     salvar() {
-      this.store.commit('ADICIONA_PROJETO', this.nomeDoProjeto)
+      this.store.commit("ADICIONA_PROJETO", this.nomeDoProjeto);
       this.nomeDoProjeto = "";
     },
   },
   setup() {
-    const store = useStore()
+    const store = useStore();
 
     return {
-      store, 
-      projetos: computed(() => store.state.projetos)
-    }
-
+      store,
+      projetos: computed(() => store.state.projetos),
+    };
   },
 });
 </script>

@@ -40,38 +40,37 @@
 import { computed, defineComponent } from "vue";
 import { useStore } from "vuex";
 
-import { key } from '@/store'
+import { key } from "@/store";
 
 import Temporizador from "./Temporizador.vue";
 
 export default defineComponent({
   name: "Formulario",
   components: { Temporizador },
-  emits: ['onSave'],
+  emits: ["onSave"],
   data() {
-    return { descricao: "", idProjeto: '' };
+    return { descricao: "", idProjeto: "" };
   },
   methods: {
     finalizarTarefa(tempoDecorrido: number): void {
-      this.$emit('onSave', {
+      this.$emit("onSave", {
         duracaoEmSegundos: tempoDecorrido,
         descricao: this.descricao,
-        projeto: this.projetos.find(proj => proj.id === this.idProjeto)
-      })
-      
+        projeto: this.projetos.find((proj) => proj.id === this.idProjeto),
+      });
+
       this.descricao = "";
     },
   },
   setup() {
-      const store = useStore(key)
+    const store = useStore(key);
 
-      return {
-        projetos: computed(() => store.state.projetos)
-      }
+    return {
+      projetos: computed(() => store.state.projetos),
+    };
   },
 });
 </script>
-
 
 <style scoped>
 .formulario {

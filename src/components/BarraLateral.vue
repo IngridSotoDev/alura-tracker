@@ -4,7 +4,7 @@
       <h1>
         <img src="../assets/logo.png" alt="" />
       </h1>
-  
+
       <button class="button" @click="alterarTema">{{ textoBotao }}</button>
     </div>
 
@@ -69,10 +69,10 @@ header {
   color: #fff;
 }
 .link:hover {
-  color: #FAF0CA;
+  color: #faf0ca;
 }
 .link.router-link-active {
-  color: #FAF0CA;
+  color: #faf0ca;
 }
 
 @media only screen and (max-width: 768px) {

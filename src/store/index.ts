@@ -6,26 +6,24 @@ interface State {
   projetos: IProjeto[];
 }
 
-export const key: InjectionKey<Store<State>> = Symbol()
+export const key: InjectionKey<Store<State>> = Symbol();
 
 export const store = createStore<State>({
   state: {
-    projetos: [
-      
-    ],
+    projetos: [],
   },
   mutations: {
-    'ADICIONA_PROJETO'(state, nomeDoProjeto: string) {
+    ADICIONA_PROJETO(state, nomeDoProjeto: string) {
       const projeto: IProjeto = {
         id: new Date().toISOString(),
-        nome: nomeDoProjeto
-      }
+        nome: nomeDoProjeto,
+      };
 
-      state.projetos.push(projeto)
-    }
-  }
+      state.projetos.push(projeto);
+    },
+  },
 });
 
 export function useStore(): Store<State> {
-  return vuexUseStore(key)
+  return vuexUseStore(key);
 }
