@@ -17,7 +17,7 @@
       </div>
     </form>
 
-    <table class="table is-fullwidth">
+    <table class="table is-fullwidth" aria-describedby="Tabela de projetos">
       <thead>
         <tr>
           <th>ID</th>
