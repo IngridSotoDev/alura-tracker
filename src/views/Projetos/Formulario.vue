@@ -20,7 +20,12 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import { useStore } from "@/store";
-import { ADICIONA_PROJETO, ALTERA_PROJETO } from "@/store/mutations-type";
+import {
+  ADICIONA_PROJETO,
+  ALTERA_PROJETO,
+  NOTIFICAR,
+} from "@/store/mutations-type";
+import { TipoNotificacao } from "@/interfaces/INotificacao";
 
 export default defineComponent({
   name: "Formulario",
@@ -42,6 +47,13 @@ export default defineComponent({
       nomeDoProjeto: "",
     };
   },
+  setup() {
+    const store = useStore();
+
+    return {
+      store,
+    };
+  },
   methods: {
     salvar() {
       if (this.id) {
@@ -52,16 +64,18 @@ export default defineComponent({
       } else {
         this.store.commit(ADICIONA_PROJETO, this.nomeDoProjeto);
         this.nomeDoProjeto = "";
+ 
+        this.store.commit(NOTIFICAR, {
+          titulo: "Novo projeto foi salvo",
+          texto: "Prontinho ;) seu projeto já está disponível.",
+          tipo: TipoNotificacao.SUCESSO,
+        });
       }
+
+
       this.$router.push("/projetos");
     },
   },
-  setup() {
-    const store = useStore();
 
-    return {
-      store,
-    };
-  },
 });
 </script>
