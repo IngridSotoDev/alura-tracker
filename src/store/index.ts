@@ -7,8 +7,11 @@ import {
   ADICIONA_PROJETO,
   ALTERA_PROJETO,
   EXCLUIR_PROJETO,
+  LISTAR_PROJETOS,
   NOTIFICAR,
 } from "./mutations-type";
+import { OBTER_PROJETOS } from "./actions-type";
+import http from "@/http";
 
 interface State {
   projetos: IProjeto[];
@@ -38,14 +41,26 @@ export const store = createStore<State>({
     [EXCLUIR_PROJETO](state, idDoProjeto: string) {
       state.projetos = state.projetos.filter((proj) => proj.id !== idDoProjeto);
     },
+    [LISTAR_PROJETOS](state, projetos: IProjeto[]) {
+      state.projetos = projetos;
+    },
     [NOTIFICAR](state, novaNotificacao: INotificacao) {
-      novaNotificacao.id = new Date().getTime()
-      state.notificacoes.push(novaNotificacao)
+      novaNotificacao.id = new Date().getTime();
+      state.notificacoes.push(novaNotificacao);
 
       setTimeout(() => {
-        state.notificacoes = state.notificacoes.filter(notificacao => notificacao.id !== novaNotificacao.id)
-      }, 3000)
-    }
+        state.notificacoes = state.notificacoes.filter(
+          (notificacao) => notificacao.id !== novaNotificacao.id
+        );
+      }, 3000);
+    },
+  },
+  actions: {
+    [OBTER_PROJETOS]({ commit }) {
+      http
+        .get("projetos")
+        .then((response) => commit(LISTAR_PROJETOS, response.data));
+    },
   },
 });
 
