@@ -9,5 +9,33 @@
       "nome": "Alura Tracker"
     }
   ],
-  "tarefas": []
+  "tarefas": [
+    {
+      "id": 1,
+      "duracaoEmSegundos": 120,
+      "descricao": "Projeto em Vue com Vuex 3.0",
+      "projeto": {
+        "id": 1,
+        "nome": "Projeto em Vue com Vuex"
+      }
+    },
+    {
+      "id": 2,
+      "duracaoEmSegundos": 12,
+      "descricao": "Projeto em Vue com Vuex 2.0",
+      "projeto": {
+        "id": 1,
+        "nome": "Alura Tracker"
+      }
+    },
+    {
+      "duracaoEmSegundos": 5,
+      "descricao": "Alura Tracker",
+      "projeto": {
+        "id": 2,
+        "nome": "Alura Tracker"
+      },
+      "id": 3
+    }
+  ]
 }

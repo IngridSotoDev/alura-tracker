@@ -23,8 +23,8 @@ export default defineComponent({
   name: "App",
   components: {
     BarraLateral,
-    Notificacoes
-},
+    Notificacoes,
+  },
   data() {
     return {
       modoEscuroAtivo: false,
@@ -45,7 +45,7 @@ export default defineComponent({
 
 main {
   --bg-primario: #fff;
-  --texto-primario: #000;
+  --texto-primario: #4a4a4a;
 }
 
 main.modo-escuro {

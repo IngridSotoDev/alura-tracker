@@ -4,10 +4,11 @@ import IProjeto from "@/interfaces/IProjeto";
 import { INotificacao } from "@/interfaces/INotificacao";
 
 import {
-  EXCLUIR_PROJETO,
-  EXCLUIR_TAREFA,
-  LISTAR_PROJETOS,
-  LISTAR_TAREFAS,
+  ADICIONA_TAREFA,
+  EXCLUI_PROJETO,
+  EXCLUI_TAREFA,
+  LISTA_PROJETOS,
+  LISTA_TAREFAS,
   NOTIFICAR,
 } from "./mutations-type";
 import {
@@ -38,16 +39,19 @@ export const store = createStore<State>({
     notificacoes: [],
   },
   mutations: {
-    [EXCLUIR_PROJETO](state, id: number) {
+    [EXCLUI_PROJETO](state, id: number) {
       state.projetos = state.projetos.filter((item) => item.id !== id);
     },
-    [LISTAR_PROJETOS](state, projetos: IProjeto[]) {
+    [LISTA_PROJETOS](state, projetos: IProjeto[]) {
       state.projetos = projetos;
     },
-    [EXCLUIR_TAREFA](state, id: number) {
+    [ADICIONA_TAREFA](state, tarefa: ITarefa) {
+      state.tarefas.push(tarefa);
+    },
+    [EXCLUI_TAREFA](state, id: number) {
       state.tarefas = state.tarefas.filter((item) => item.id !== id);
     },
-    [LISTAR_TAREFAS](state, tarefas: ITarefa[]) {
+    [LISTA_TAREFAS](state, tarefas: ITarefa[]) {
       state.tarefas = tarefas;
     },
     [NOTIFICAR](state, novaNotificacao: INotificacao) {
@@ -65,7 +69,7 @@ export const store = createStore<State>({
     [OBTER_PROJETOS]({ commit }) {
       http
         .get("projetos")
-        .then((response) => commit(LISTAR_PROJETOS, response.data));
+        .then((response) => commit(LISTA_PROJETOS, response.data));
     },
     [CADASTRAR_PROJETO](context, nomeDoProjeto: string) {
       return http.post("projetos", {
@@ -78,25 +82,23 @@ export const store = createStore<State>({
     [REMOVER_PROJETO]({ commit }, id: number) {
       return http
         .delete(`projetos/${id}`)
-        .then(() => commit(EXCLUIR_PROJETO, id));
+        .then(() => commit(EXCLUI_PROJETO, id));
     },
     [OBTER_TAREFAS]({ commit }) {
       http
         .get("tarefas")
-        .then((response) => commit(LISTAR_TAREFAS, response.data));
+        .then((response) => commit(LISTA_TAREFAS, response.data));
     },
-    [CADASTRAR_TAREFA](context, nomeDoProjeto: string) {
-      return http.post("tarefas", {
-        nome: nomeDoProjeto,
-      });
+    [CADASTRAR_TAREFA]({ commit }, tarefa: ITarefa) {
+      return http
+        .post("tarefas", tarefa)
+        .then((response) => commit(ADICIONA_TAREFA, response.data));
     },
     [ALTERAR_TAREFA](context, tarefa: ITarefa) {
       return http.put(`tarefas/${tarefa.id}`, tarefa);
     },
     [REMOVER_TAREFA]({ commit }, id: number) {
-      return http
-        .delete(`tarefas/${id}`)
-        .then(() => commit(EXCLUIR_TAREFA, id));
+      return http.delete(`tarefas/${id}`).then(() => commit(EXCLUI_TAREFA, id));
     },
   },
 });
