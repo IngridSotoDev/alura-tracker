@@ -49,14 +49,14 @@ export default defineComponent({
   components: { Temporizador },
   emits: ["onSave"],
   data() {
-    return { descricao: "", idProjeto: "" };
+    return { descricao: "", idProjeto: null };
   },
   methods: {
     finalizarTarefa(tempoDecorrido: number): void {
       this.$emit("onSave", {
         duracaoEmSegundos: tempoDecorrido,
         descricao: this.descricao,
-        projeto: this.projetos.find((proj) => proj.id === this.idProjeto),
+        projeto: this.projetos.find((proj) => proj.id == this.idProjeto),
       });
 
       this.descricao = "";
