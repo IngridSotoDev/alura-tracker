@@ -18,7 +18,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, ref } from "vue";
 
 import useNotificador from "@/hooks/notificador";
 import { TipoNotificacao } from "@/interfaces/INotificacao";
@@ -33,26 +33,25 @@ export default defineComponent({
       type: Number,
     },
   },
-  data() {
-    return {
-      nomeDoProjeto: "",
-    };
-  },
-  setup() {
+  setup(props) {
     const store = useStore();
     const { notificar } = useNotificador();
+
+    const nomeDoProjeto = ref("");
+
+    if (props.id) {
+      const projeto = store.state.projeto.projetos.find(
+        (proj) => proj.id == props.id
+      );
+
+      nomeDoProjeto.value = projeto?.nome ?? "";
+    }
+
     return {
       store,
       notificar,
+      nomeDoProjeto,
     };
-  },
-  mounted() {
-    if (this.id) {
-      const projeto = this.store.state.projeto.projetos.find(
-        (proj) => proj.id == this.id
-      );
-      this.nomeDoProjeto = projeto?.nome ?? "";
-    }
   },
   methods: {
     salvar() {

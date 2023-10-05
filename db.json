@@ -1,8 +1,8 @@
 {
   "projetos": [
     {
-      "nome": "Projeto em Vue com Vuex",
-      "id": 1
+      "id": 1,
+      "nome": "Projeto em Vue com Vuex 3.0"
     },
     {
       "id": 2,
