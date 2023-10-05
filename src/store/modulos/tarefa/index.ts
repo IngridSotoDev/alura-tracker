@@ -13,6 +13,8 @@ export interface TaskState {
   tarefas: ITarefa[];
 }
 
+const URL = "tarefas";
+
 export const tarefa: Module<TaskState, StateGlobal> = {
   mutations: {
     [ADICIONA_TAREFA](state, tarefa: ITarefa) {
@@ -27,19 +29,21 @@ export const tarefa: Module<TaskState, StateGlobal> = {
     },
   },
   actions: {
-    [OBTER_TAREFAS]({ commit }) {
+    [OBTER_TAREFAS]({ commit }, filtro) {
+      const queryParams = filtro ? "?descricao=" + filtro : "";
+
       http
-        .get("tarefas")
+        .get(`${URL}/${queryParams}`)
         .then((response) => commit(LISTA_TAREFAS, response.data));
     },
     [CADASTRAR_TAREFA]({ commit }, tarefa: ITarefa) {
       return http
-        .post("tarefas", tarefa)
+        .post(URL, tarefa)
         .then((response) => commit(ADICIONA_TAREFA, response.data));
     },
     [ALTERAR_TAREFA]({ commit }, tarefa: ITarefa) {
       return http
-        .put(`tarefas/${tarefa.id}`, tarefa)
+        .put(`${URL}/${tarefa.id}`, tarefa)
         .then(() => commit(ALTERAR_TAREFA, tarefa));
     },
   },

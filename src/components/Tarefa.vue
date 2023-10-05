@@ -4,7 +4,7 @@
       <div class="column is-4">
         {{ tarefaItem.descricao || "Tarefa sem descrição" }}
       </div>
-      <div class="column is-3">
+      <div class="column is-5">
         {{ tarefaItem.projeto?.nome || "N/D" }}
       </div>
       <div class="column is-flex is-align-items-center">
