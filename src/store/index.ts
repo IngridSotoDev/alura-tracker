@@ -3,14 +3,13 @@ import { Store, createStore, useStore as vuexUseStore } from "vuex";
 import IProjeto from "@/interfaces/IProjeto";
 import { INotificacao } from "@/interfaces/INotificacao";
 
+import { EXCLUIR_PROJETO, LISTAR_PROJETOS, NOTIFICAR } from "./mutations-type";
 import {
-  ADICIONA_PROJETO,
-  ALTERA_PROJETO,
-  EXCLUIR_PROJETO,
-  LISTAR_PROJETOS,
-  NOTIFICAR,
-} from "./mutations-type";
-import { OBTER_PROJETOS } from "./actions-type";
+  ALTERAR_PROJETO,
+  CADASTRAR_PROJETO,
+  OBTER_PROJETOS,
+  REMOVER_PROJETO,
+} from "./actions-type";
 import http from "@/http";
 
 interface State {
@@ -26,19 +25,7 @@ export const store = createStore<State>({
     notificacoes: [],
   },
   mutations: {
-    [ADICIONA_PROJETO](state, nomeDoProjeto: string) {
-      const projeto: IProjeto = {
-        id: new Date().toISOString(),
-        nome: nomeDoProjeto,
-      };
-
-      state.projetos.push(projeto);
-    },
-    [ALTERA_PROJETO](state, projeto: IProjeto) {
-      const index = state.projetos.findIndex((proj) => proj.id === projeto.id);
-      state.projetos[index] = projeto;
-    },
-    [EXCLUIR_PROJETO](state, idDoProjeto: string) {
+    [EXCLUIR_PROJETO](state, idDoProjeto: number) {
       state.projetos = state.projetos.filter((proj) => proj.id !== idDoProjeto);
     },
     [LISTAR_PROJETOS](state, projetos: IProjeto[]) {
@@ -60,6 +47,19 @@ export const store = createStore<State>({
       http
         .get("projetos")
         .then((response) => commit(LISTAR_PROJETOS, response.data));
+    },
+    [CADASTRAR_PROJETO](context, nomeDoProjeto: string) {
+      return http.post("projetos", {
+        nome: nomeDoProjeto,
+      });
+    },
+    [ALTERAR_PROJETO](context, projeto: IProjeto) {
+      return http.put(`projetos/${projeto.id}`, projeto);
+    },
+    [REMOVER_PROJETO]({ commit }, idProjeto: number) {
+      return http
+        .delete(`projetos/${idProjeto}`)
+        .then(() => commit(EXCLUIR_PROJETO, idProjeto));
     },
   },
 });
