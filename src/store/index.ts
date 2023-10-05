@@ -6,7 +6,6 @@ import { INotificacao } from "@/interfaces/INotificacao";
 import {
   ADICIONA_TAREFA,
   EXCLUI_PROJETO,
-  EXCLUI_TAREFA,
   LISTA_PROJETOS,
   LISTA_TAREFAS,
   NOTIFICAR,
@@ -19,7 +18,6 @@ import {
   OBTER_PROJETOS,
   OBTER_TAREFAS,
   REMOVER_PROJETO,
-  REMOVER_TAREFA,
 } from "./actions-type";
 import http from "@/http";
 import ITarefa from "@/interfaces/ITarefa";
@@ -48,8 +46,9 @@ export const store = createStore<State>({
     [ADICIONA_TAREFA](state, tarefa: ITarefa) {
       state.tarefas.push(tarefa);
     },
-    [EXCLUI_TAREFA](state, id: number) {
-      state.tarefas = state.tarefas.filter((item) => item.id !== id);
+    [ALTERAR_TAREFA](state, tarefa: ITarefa) {
+      const index = state.tarefas.findIndex((item) => item.id === tarefa.id);
+      state.tarefas[index] = tarefa;
     },
     [LISTA_TAREFAS](state, tarefas: ITarefa[]) {
       state.tarefas = tarefas;
@@ -94,11 +93,10 @@ export const store = createStore<State>({
         .post("tarefas", tarefa)
         .then((response) => commit(ADICIONA_TAREFA, response.data));
     },
-    [ALTERAR_TAREFA](context, tarefa: ITarefa) {
-      return http.put(`tarefas/${tarefa.id}`, tarefa);
-    },
-    [REMOVER_TAREFA]({ commit }, id: number) {
-      return http.delete(`tarefas/${id}`).then(() => commit(EXCLUI_TAREFA, id));
+    [ALTERAR_TAREFA]({ commit }, tarefa: ITarefa) {
+      return http
+        .put(`tarefas/${tarefa.id}`, tarefa)
+        .then(() => commit(ALTERAR_TAREFA, tarefa));
     },
   },
 });

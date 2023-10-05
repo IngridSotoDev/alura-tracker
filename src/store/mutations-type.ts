@@ -4,5 +4,5 @@ export const LISTA_PROJETOS = "LISTA_PROJETOS";
 export const NOTIFICAR = "NOTIFICAR";
 
 export const ADICIONA_TAREFA = "ADICIONA_TAREFA";
-export const EXCLUI_TAREFA = "EXCLUI_TAREFA";
+export const ALTERA_TAREFA = "ALTERA_TAREFA";
 export const LISTA_TAREFAS = "LISTA_TAREFAS";

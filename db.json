@@ -13,7 +13,7 @@
     {
       "id": 1,
       "duracaoEmSegundos": 120,
-      "descricao": "Projeto em Vue com Vuex 3.0",
+      "descricao": "Projeto em Vue com Vuex 3",
       "projeto": {
         "id": 1,
         "nome": "Projeto em Vue com Vuex"
