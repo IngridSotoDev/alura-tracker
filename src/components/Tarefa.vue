@@ -1,6 +1,6 @@
 <template>
   <Box>
-    <div class="columns">
+    <div class="columns clicavel" @click="tarefaClicada">
       <div class="column is-4">
         {{ tarefa.descricao || "Tarefa sem descrição" }}
       </div>
@@ -25,11 +25,23 @@ import ITarefa from "@/interfaces/ITarefa";
 export default defineComponent({
   name: "Tarefa",
   components: { Box, Cronometro },
+  emits: ["onClick"],
   props: {
     tarefa: {
       type: Object as PropType<ITarefa>,
       required: true,
     },
   },
+  methods: {
+    tarefaClicada(): void {
+      this.$emit("onClick", this.tarefa);
+    },
+  },
 });
 </script>
+
+<style scoped>
+.clicavel {
+  cursor: pointer;
+}
+</style>
