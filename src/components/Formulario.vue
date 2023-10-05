@@ -53,15 +53,17 @@ export default defineComponent({
     const projetos = computed(() => store.state.projeto.projetos);
 
     const descricao = ref("");
-    const idProjeto = ref(null);
+    const idProjeto = ref("");
 
     const finalizarTarefa = (tempoDecorrido: number): void => {
       emit("onSave", {
         duracaoEmSegundos: tempoDecorrido,
         descricao: descricao.value,
-        projeto: projetos.value.find((proj) => proj.id == idProjeto.value),
+        projeto: projetos.value.find(
+          (item) => item.id == Number(idProjeto.value)
+        ),
       });
-      idProjeto.value = null;
+      idProjeto.value = "";
       descricao.value = "";
     };
 
