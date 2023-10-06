@@ -13,6 +13,7 @@ import { Module } from "vuex";
 export interface ProjectState {
   projetos: IProjeto[];
 }
+const URL = "projects";
 
 export const projeto: Module<ProjectState, StateGlobal> = {
   mutations: {
@@ -25,22 +26,18 @@ export const projeto: Module<ProjectState, StateGlobal> = {
   },
   actions: {
     [OBTER_PROJETOS]({ commit }) {
-      http
-        .get("projetos")
-        .then((response) => commit(LISTA_PROJETOS, response.data));
+      http.get(URL).then((response) => commit(LISTA_PROJETOS, response.data));
     },
     [CADASTRAR_PROJETO](context, nomeDoProjeto: string) {
-      return http.post("projetos", {
+      return http.post(URL, {
         nome: nomeDoProjeto,
       });
     },
     [ALTERAR_PROJETO](context, projeto: IProjeto) {
-      return http.put(`projetos/${projeto.id}`, projeto);
+      return http.put(`${URL}/${projeto.id}`, projeto);
     },
     [REMOVER_PROJETO]({ commit }, id: number) {
-      return http
-        .delete(`projetos/${id}`)
-        .then(() => commit(EXCLUI_PROJETO, id));
+      return http.delete(`${URL}/${id}`).then(() => commit(EXCLUI_PROJETO, id));
     },
   },
 };

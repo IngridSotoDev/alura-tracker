@@ -13,7 +13,7 @@ export interface TaskState {
   tarefas: ITarefa[];
 }
 
-const URL = "tarefas";
+const URL = "tasks";
 
 export const tarefa: Module<TaskState, StateGlobal> = {
   mutations: {
@@ -30,7 +30,7 @@ export const tarefa: Module<TaskState, StateGlobal> = {
   },
   actions: {
     [OBTER_TAREFAS]({ commit }, filtro) {
-      const queryParams = filtro ? "/?descricao=" + filtro : "";
+      const queryParams = filtro ? "?q=" + filtro : "";
 
       http
         .get(`${URL}${queryParams}`)

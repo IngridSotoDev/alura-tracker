@@ -2,8 +2,6 @@
   <Formulario @onSave="salvarTarefa" />
 
   <div class="lista">
-    <Box v-if="listaEstaVazia"> Você não esta muito produtiva hoje :( </Box>
-
     <div class="field">
       <p class="control has-icons-left">
         <input
@@ -17,6 +15,12 @@
         </span>
       </p>
     </div>
+
+    <Box v-if="listaEstaVazia && !filtro">
+      Você não esta muito produtiva hoje :(
+    </Box>
+
+    <Box v-if="listaEstaVazia && filtro"> Tarefa não encontrada :( </Box>
 
     <Tarefa
       v-for="(tarefa, index) in tarefas"
