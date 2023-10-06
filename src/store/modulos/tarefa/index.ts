@@ -30,10 +30,10 @@ export const tarefa: Module<TaskState, StateGlobal> = {
   },
   actions: {
     [OBTER_TAREFAS]({ commit }, filtro) {
-      const queryParams = filtro ? "?descricao=" + filtro : "";
+      const queryParams = filtro ? "/?descricao=" + filtro : "";
 
       http
-        .get(`${URL}/${queryParams}`)
+        .get(`${URL}${queryParams}`)
         .then((response) => commit(LISTA_TAREFAS, response.data));
     },
     [CADASTRAR_TAREFA]({ commit }, tarefa: ITarefa) {

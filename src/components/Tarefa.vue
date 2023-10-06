@@ -2,21 +2,21 @@
   <Box>
     <div class="columns clicavel" @click="tarefaClicada">
       <div class="column is-4">
-        {{ tarefaItem.descricao || "Tarefa sem descrição" }}
+        {{ tarefa.descricao || "Tarefa sem descrição" }}
       </div>
       <div class="column is-5">
-        {{ tarefaItem.projeto?.nome || "N/D" }}
+        {{ tarefa.projeto?.nome || "N/D" }}
       </div>
       <div class="column is-flex is-align-items-center">
         <i class="fa-regular fa-clock mr-2"></i>
-        <Cronometro :tempoEmSegundos="tarefaItem.duracaoEmSegundos" />
+        <Cronometro :tempoEmSegundos="tarefa.duracaoEmSegundos" />
       </div>
     </div>
   </Box>
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, toRefs } from "vue";
+import { defineComponent, PropType } from "vue";
 
 import Box from "./Box.vue";
 import Cronometro from "./Cronometro.vue";
@@ -32,17 +32,10 @@ export default defineComponent({
       required: true,
     },
   },
-  setup(props, { emit }) {
-    const { tarefa } = toRefs(props);
-
-    const tarefaClicada = (): void => {
-      emit("onSelect", tarefa);
-    };
-
-    return {
-      tarefaItem: tarefa,
-      tarefaClicada,
-    };
+  methods: {
+    tarefaClicada() {
+      this.$emit("onSelect", this.tarefa);
+    },
   },
 });
 </script>
