@@ -83,7 +83,6 @@ export default defineComponent({
   },
   setup() {
     const store = useStore();
-    store.dispatch(OBTER_TAREFAS);
     store.dispatch(OBTER_PROJETOS);
 
     const filtro = ref("");
